@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../application/bloc/home_bloc.dart';
-import 'home_screen/home.dart';
+import 'document_list_screen/document_list_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: BlocProvider(
         create: (context) => HomeBloc(),
-        child: HomePage(),
+        child:const DocumentListScreen(),
       ),
     );
   }
