@@ -1,4 +1,4 @@
-package com.example.card_ml_prj
+package com.project.card_scanner
 
 import io.flutter.embedding.android.FlutterActivity
 

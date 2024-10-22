@@ -11,6 +11,11 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter(ScannedDocumentAdapter());
+    Hive.registerAdapter(BlockEntityAdapter());
+        Hive.registerAdapter(EntityTypeAdapter());
+
+    
+
   final repository = HiveScannedDocumentRepository();
   await repository.initialize();
   runApp(MyApp());

@@ -456,6 +456,7 @@ abstract class _DeleteDocument implements HomeEvent {
 mixin _$HomeState {
   String get scannedData => throw _privateConstructorUsedError;
   List<ScannedDocument> get documents => throw _privateConstructorUsedError;
+  List<BlockEntity> get entities => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -469,7 +470,10 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({String scannedData, List<ScannedDocument> documents});
+  $Res call(
+      {String scannedData,
+      List<ScannedDocument> documents,
+      List<BlockEntity> entities});
 }
 
 /// @nodoc
@@ -489,6 +493,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? scannedData = null,
     Object? documents = null,
+    Object? entities = null,
   }) {
     return _then(_value.copyWith(
       scannedData: null == scannedData
@@ -499,6 +504,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.documents
           : documents // ignore: cast_nullable_to_non_nullable
               as List<ScannedDocument>,
+      entities: null == entities
+          ? _value.entities
+          : entities // ignore: cast_nullable_to_non_nullable
+              as List<BlockEntity>,
     ) as $Val);
   }
 }
@@ -511,7 +520,10 @@ abstract class _$$InitialImplCopyWith<$Res>
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String scannedData, List<ScannedDocument> documents});
+  $Res call(
+      {String scannedData,
+      List<ScannedDocument> documents,
+      List<BlockEntity> entities});
 }
 
 /// @nodoc
@@ -529,6 +541,7 @@ class __$$InitialImplCopyWithImpl<$Res>
   $Res call({
     Object? scannedData = null,
     Object? documents = null,
+    Object? entities = null,
   }) {
     return _then(_$InitialImpl(
       scannedData: null == scannedData
@@ -539,6 +552,10 @@ class __$$InitialImplCopyWithImpl<$Res>
           ? _value._documents
           : documents // ignore: cast_nullable_to_non_nullable
               as List<ScannedDocument>,
+      entities: null == entities
+          ? _value._entities
+          : entities // ignore: cast_nullable_to_non_nullable
+              as List<BlockEntity>,
     ));
   }
 }
@@ -548,8 +565,10 @@ class __$$InitialImplCopyWithImpl<$Res>
 class _$InitialImpl implements _Initial {
   _$InitialImpl(
       {required this.scannedData,
-      required final List<ScannedDocument> documents})
-      : _documents = documents;
+      required final List<ScannedDocument> documents,
+      required final List<BlockEntity> entities})
+      : _documents = documents,
+        _entities = entities;
 
   @override
   final String scannedData;
@@ -561,9 +580,17 @@ class _$InitialImpl implements _Initial {
     return EqualUnmodifiableListView(_documents);
   }
 
+  final List<BlockEntity> _entities;
+  @override
+  List<BlockEntity> get entities {
+    if (_entities is EqualUnmodifiableListView) return _entities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_entities);
+  }
+
   @override
   String toString() {
-    return 'HomeState(scannedData: $scannedData, documents: $documents)';
+    return 'HomeState(scannedData: $scannedData, documents: $documents, entities: $entities)';
   }
 
   @override
@@ -574,12 +601,16 @@ class _$InitialImpl implements _Initial {
             (identical(other.scannedData, scannedData) ||
                 other.scannedData == scannedData) &&
             const DeepCollectionEquality()
-                .equals(other._documents, _documents));
+                .equals(other._documents, _documents) &&
+            const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, scannedData,
-      const DeepCollectionEquality().hash(_documents));
+  int get hashCode => Object.hash(
+      runtimeType,
+      scannedData,
+      const DeepCollectionEquality().hash(_documents),
+      const DeepCollectionEquality().hash(_entities));
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -593,12 +624,15 @@ class _$InitialImpl implements _Initial {
 abstract class _Initial implements HomeState {
   factory _Initial(
       {required final String scannedData,
-      required final List<ScannedDocument> documents}) = _$InitialImpl;
+      required final List<ScannedDocument> documents,
+      required final List<BlockEntity> entities}) = _$InitialImpl;
 
   @override
   String get scannedData;
   @override
   List<ScannedDocument> get documents;
+  @override
+  List<BlockEntity> get entities;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

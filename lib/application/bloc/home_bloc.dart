@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:card_ml_prj/domain/utils/functions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         extractText: (event) async {
           DocumentScannerOptions documentOptions = DocumentScannerOptions(
             documentFormat: DocumentFormat.jpeg,
-            mode: ScannerMode.filter,
+            mode: ScannerMode.full,
             pageLimit: 1,
             isGalleryImport: true,
           );
@@ -37,6 +41,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               final recognizedText = await textDetector.processImage(
                 InputImage.fromFilePath(result.images.last),
               );
+              // final EntityExtractor entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorLanguage.english);
+              // final List<EntityAnnotation> annotations = await entityExtractor.annotateText(recognizedText.text);
+              List<BlockEntity> blockentities = [];
+              for (var element in recognizedText.blocks) {
+                blockentities.add(classifyText(element.text));
+              }
+              log("0-----");
+              for (BlockEntity element in blockentities) {
+                log("===========");
+
+                print(element.data);
+                print(element.type);
+                log("===========");
+              }
+              log("-----");
 
               // Save image to app directory
               final appDir = await getApplicationDocumentsDirectory();
@@ -47,6 +66,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 imagePath: savedImage.path,
                 extractedText: recognizedText.text,
                 scanDate: DateTime.now(),
+                blockEntity: blockentities,
               );
               print("uuuu");
 
@@ -54,14 +74,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               print("ggg");
 
               final updatedDocuments = await _repository.getAllDocuments();
-              emit(state.copyWith(
-                scannedData: recognizedText.text,
-                documents: updatedDocuments,
-              ));
+              emit(state.copyWith(scannedData: recognizedText.text, documents: updatedDocuments, entities: blockentities));
               print("hhh̤");
               print(updatedDocuments);
             }
           } catch (e) {
+            log(e.toString());
             emit(state.copyWith(scannedData: e.toString()));
           } finally {
             await textDetector.close();
